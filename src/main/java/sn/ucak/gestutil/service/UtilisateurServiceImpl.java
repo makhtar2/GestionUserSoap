@@ -14,7 +14,6 @@ public class UtilisateurServiceImpl implements IUtilisateurService {
     // Compteur pour générer des matricules uniques
     private static int matriculeCounter = 1;
 
-    // Données initiales
     static {
         utilisateurs.add(new Utilisateur("MAT001", "Wade", "Makhtar", "Etudiant", "771234567", "makhtar.wade@ucak.univ.sn"));
         utilisateurs.add(new Utilisateur("MAT002", "Aidara", "Pape Makhtar", "Professeur", "789876543", "pape.aidara@ucak.univ.sn"));
@@ -25,16 +24,19 @@ public class UtilisateurServiceImpl implements IUtilisateurService {
     @Override
     // Retourne l'Utilisateur ajouté avec matricule généré, ou null en cas d'échec.
     public Utilisateur ajouterUtilisateur(Utilisateur utilisateur) {
+        // Validation serveur : aucun champ ne doit être vide
+        if (isInvalid(utilisateur)) {
+            return null;
+        }
+
         // Génère un nouveau matricule (ex: UCAK001, UCAK002, ...)
         String newMatricule = "UCAK" + String.format("%03d", matriculeCounter++);
         utilisateur.setMatricule(newMatricule);
         
         // Ajoute l'utilisateur avec le matricule généré.
-        // La vérification de doublon sur d'autres champs pourrait être ajoutée ici si nécessaire.
         if (utilisateurs.add(utilisateur)) {
-            return utilisateur; // Retourne l'utilisateur complet avec son matricule assigné
+            return utilisateur; 
         } else {
-            // Ce cas est improbable avec un simple compteur, mais gère une éventuelle erreur d'ajout.
             return null; 
         }
     }
@@ -54,7 +56,11 @@ public class UtilisateurServiceImpl implements IUtilisateurService {
 
     @Override
     public boolean modifierUtilisateur(Utilisateur utilisateur) {
-        // Pour la modification, on suppose que le matricule est déjà présent sur l'objet utilisateur.
+        // Validation serveur : aucun champ ne doit être vide (matricule inclus pour modif)
+        if (isInvalid(utilisateur) || utilisateur.getMatricule() == null || utilisateur.getMatricule().isEmpty()) {
+            return false;
+        }
+
         // La logique de modification cherche par matricule existant et met à jour.
         for (int i = 0; i < utilisateurs.size(); i++) {
             if (utilisateurs.get(i).getMatricule().equalsIgnoreCase(utilisateur.getMatricule())) {
@@ -63,6 +69,16 @@ public class UtilisateurServiceImpl implements IUtilisateurService {
             }
         }
         return false;
+    }
+
+    // Méthode utilitaire de validation
+    private boolean isInvalid(Utilisateur u) {
+        return u == null || 
+               u.getNom() == null || u.getNom().trim().isEmpty() ||
+               u.getPrenom() == null || u.getPrenom().trim().isEmpty() ||
+               u.getRole() == null || u.getRole().trim().isEmpty() ||
+               u.getTelephone() == null || u.getTelephone().trim().isEmpty() ||
+               u.getEmail() == null || u.getEmail().trim().isEmpty();
     }
 
     @Override

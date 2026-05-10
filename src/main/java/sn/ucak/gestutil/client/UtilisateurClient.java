@@ -153,7 +153,7 @@ public class UtilisateurClient {
         }
 
         System.out.println(" [INFO] Modification du profil de : " + existant.getNom() + " " + existant.getPrenom() + " (Matricule: " + existant.getMatricule() + ")");
-        System.out.println(" (Laissez un champ vide pour conserver sa valeur actuelle)");
+        System.out.println(" (Tous les champs doivent être obligatoirement renseignés)");
         // Passe le matricule existant pour qu'il ne soit pas modifié par saisirInfos
         Utilisateur modU = saisirInfos(scanner, mat); 
         
@@ -201,10 +201,17 @@ public class UtilisateurClient {
         return new Utilisateur(matricule, nom, prenom, role, tel, email);
     }
 
-    // Méthode utilitaire pour demander une valeur string
+    // Méthode utilitaire pour demander une valeur string avec validation de non-vacuité
     private static String prompt(Scanner scanner, String label) {
-        System.out.print("  " + label + " : ");
-        return scanner.nextLine().trim();
+        String value;
+        do {
+            System.out.print("  " + label + " : ");
+            value = scanner.nextLine().trim();
+            if (value.isEmpty()) {
+                System.out.println("  [!] Le champ " + label + " ne peut pas être vide.");
+            }
+        } while (value.isEmpty());
+        return value;
     }
 
     // Méthode utilitaire pour demander le rôle avec validation
