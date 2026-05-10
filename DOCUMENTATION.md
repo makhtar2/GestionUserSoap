@@ -69,34 +69,9 @@ Afin de valider le bon fonctionnement du système, les tests suivants ont été 
 
 ---
 
-### 6. Étude Comparative : RMI vs Web Service SOAP
+### 6. Étude Comparative
 
-#### 1. Méthode d'appel en RMI
-En RMI, le client utilise un **stub** obtenu via un registre RMI. L'échange s'effectue via le protocole binaire **JRMP**, limitant l'usage à l'écosystème Java.
-
-#### 2. Méthode d'appel en Web Service
-Le Web Service utilise des messages **XML (SOAP)** transportés par le protocole **HTTP**. Un proxy local convertit les appels Java en requêtes standardisées.
-
-#### 3. Rôle du Registre RMI
-Le registre sert d'annuaire permettant au serveur de publier ses objets et au client de localiser les références distantes par un nom logique.
-
-#### 4. Rôle du WSDL
-Le WSDL est le contrat formel du service. Il définit les méthodes, les types de données complexes et les points d'accès (URL) de manière indépendante du langage.
-
-#### 5. Liaison RMI et Java
-RMI est fortement lié à Java car il repose sur la sérialisation native des objets Java et nécessite une JVM des deux côtés.
-
-#### 6. Interopérabilité de SOAP
-SOAP est interopérable car il repose sur des standards universels (XML et HTTP), permettant à des clients écrits dans n'importe quel langage de consommer le service.
-
-#### 7. Avantages de SOAP
-*   **Interopérabilité :** Communication entre plateformes hétérogènes.
-*   **Standardisation :** Contrat WSDL rigoureux.
-*   **Accessibilité :** Utilise les ports web standards (80/443).
-
-#### 8. Inconvénients de SOAP
-*   **Performance :** Surcoût lié au parsing XML.
-*   **Volumétrie :** Messages verbeux augmentant la consommation de bande passante.
+L'analyse comparative entre l'ancienne architecture RMI et la nouvelle architecture Web Service SOAP est disponible dans le document séparé : **[COMPARAISON.md](COMPARAISON.md)**.
 
 ---
 *Auteurs : Pape Makhtar Aidara et Makhtar WADE — Université Cheikh Ahmadoul Khadim (UCAK) — 2026*
