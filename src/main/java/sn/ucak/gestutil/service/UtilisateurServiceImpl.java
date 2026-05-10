@@ -29,6 +29,11 @@ public class UtilisateurServiceImpl implements IUtilisateurService {
             return null;
         }
 
+        // Vérification d'unicité (Email et Téléphone)
+        if (exists(utilisateur.getEmail(), utilisateur.getTelephone(), null)) {
+            return null; // Conflit détecté
+        }
+
         // Génère un nouveau matricule (ex: UCAK001, UCAK002, ...)
         String newMatricule = "UCAK" + String.format("%03d", matriculeCounter++);
         utilisateur.setMatricule(newMatricule);
@@ -61,6 +66,11 @@ public class UtilisateurServiceImpl implements IUtilisateurService {
             return false;
         }
 
+        // Vérification d'unicité (en ignorant l'utilisateur en cours de modification)
+        if (exists(utilisateur.getEmail(), utilisateur.getTelephone(), utilisateur.getMatricule())) {
+            return false; // Conflit détecté
+        }
+
         // La logique de modification cherche par matricule existant et met à jour.
         for (int i = 0; i < utilisateurs.size(); i++) {
             if (utilisateurs.get(i).getMatricule().equalsIgnoreCase(utilisateur.getMatricule())) {
@@ -69,6 +79,14 @@ public class UtilisateurServiceImpl implements IUtilisateurService {
             }
         }
         return false;
+    }
+
+    // Méthode utilitaire pour vérifier l'existence d'un email ou téléphone
+    private boolean exists(String email, String tel, String currentMatricule) {
+        return utilisateurs.stream().anyMatch(u -> 
+            (u.getEmail().equalsIgnoreCase(email) || u.getTelephone().equals(tel)) &&
+            (currentMatricule == null || !u.getMatricule().equalsIgnoreCase(currentMatricule))
+        );
     }
 
     // Méthode utilitaire de validation

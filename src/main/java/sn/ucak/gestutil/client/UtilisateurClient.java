@@ -133,7 +133,8 @@ public class UtilisateurClient {
             System.out.println("[SUCCÈS]");
             System.out.println("   -> Nouvel utilisateur enregistré avec le matricule : " + addedUser.getMatricule());
         } else {
-            System.out.println("[ÉCHEC] Impossible d'ajouter l'utilisateur (vérifiez les données ou si le serveur est actif).");
+            System.out.println("[ÉCHEC] Impossible d'ajouter l'utilisateur.");
+            System.out.println("   -> Raison possible : L'email ou le téléphone existe déjà dans le système.");
         }
     }
 
@@ -161,6 +162,7 @@ public class UtilisateurClient {
             System.out.println(" [SUCCÈS] Le profil a été mis à jour.");
         } else {
             System.out.println(" [ÉCHEC] Erreur lors de la mise à jour.");
+            System.out.println("   -> Raison possible : Le nouvel email ou téléphone est déjà utilisé par un autre membre.");
         }
     }
 
@@ -187,7 +189,7 @@ public class UtilisateurClient {
     // Méthode utilitaire pour demander les informations utilisateur, gère la validation du rôle
     private static Utilisateur saisirInfos(Scanner scanner, String matFixe) {
         String matricule = matFixe; // Matricule pour la modification, null pour l'ajout
-        if (matricule == null) { // On ne demande le matricule que si on est en mode modification
+        if (matricule == null) {
             // Le matricule est maintenant généré par le serveur lors de l'ajout.
             // Pour la modification, le matricule est conservé.
         }
