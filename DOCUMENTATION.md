@@ -54,7 +54,22 @@ Le Web Service expose une interface CRUD via le contrat `IUtilisateurService`. L
 
 ---
 
-### 5. Étude Comparative : RMI vs Web Service SOAP
+### 5. Captures d'écran des tests
+
+Afin de valider le bon fonctionnement du système, les tests suivants ont été réalisés :
+
+*   **Validation du Contrat (WSDL) :** Consultation du flux XML généré par le serveur.
+    ![WSDL](captures/01_wsdl.png)
+
+*   **Lancement du Serveur :** Confirmation de la publication du service sur le port 8080.
+    ![Serveur](captures/02_serveur.png)
+
+*   **Opération Liste :** Affichage de la liste des membres via le client console.
+    ![Client Liste](captures/03_client_liste.png)
+
+---
+
+### 6. Étude Comparative : RMI vs Web Service SOAP
 
 #### 1. Méthode d'appel en RMI
 En RMI, le client utilise un **stub** obtenu via un registre RMI. L'échange s'effectue via le protocole binaire **JRMP**, limitant l'usage à l'écosystème Java.
